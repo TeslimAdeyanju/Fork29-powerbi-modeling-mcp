@@ -90,7 +90,7 @@ Example of config that should work in most MCP clients:
 
 Once the connection is established, you can use natural language to ask the AI agent to make any modeling changes. To get started, try one of the following scenarios.
 
-#### Usage Examples
+#### Example scenarios
 
 | Scenario                                                | Prompt examples                                                                                                                                                                   |
 | ------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
