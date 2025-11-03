@@ -2,7 +2,7 @@
 
 The **Power BI Modeling MCP Server** implements the [MCP specification](https://modelcontextprotocol.io/introduction) to create a seamless connection between AI agents and Power BI semantic models. This project is in Public Preview and implementation may significantly change prior to our General Availability.
 
-It’s a local, AI-ready Model Context Protocol (MCP) server that encapsulates the full Power BI semantic modeling capabilities, enabling you to build and modify models using natural language. Its goal is to dramatically accelerate semantic model development in Power BI, empowering developers to work more efficiently and focus on what matters most: delivering insights.
+The **Power BI Modeling MCP Server** brings Power BI semantic modeling capabilities to your AI agents through a **local MCP server**. This allows developers and AI applications to interact with Power BI models in entirely new ways, from using natural language to execute modeling changes to autonomous AI agentic development workflows.
 
 ![powerbi-modeling-mcp-diagram](docs/img/e2e-diagram.png)
 
@@ -22,13 +22,12 @@ It’s a local, AI-ready Model Context Protocol (MCP) server that encapsulates t
 
 > [!WARNING]  
 > - Use caution when connecting an AI Agent to a semantic model. The underlying LLM may produce unexpected or inaccurate results, which could lead to unintended changes. **Always create a backup of your model before performing any operations.** 
-> - The Power BI Modeling MCP server can only execute modeling operations. It cannot modify other types of Power BI metadata, such as report pages or semantic model elements like diagram layouts.
+> - LLMs might unintentionally expose sensitive information from the semantic model, including data or metadata, in logs or responses. **Exercise caution when sharing chat sessions.**
+> - The **Power BI Modeling MCP server** can only execute modeling operations. It cannot modify other types of Power BI metadata, such as report pages or semantic model elements like diagram layouts.
 
-## 🚀 Getting started
+## 📦 How to install
 
-### How to install
-
-#### Visual Studio Code (Recommended)
+### Visual Studio Code (Recommended)
 
 1. Install [Visual Studio Code](https://code.visualstudio.com/download).
 2. Install the [GitHub Copilot](https://marketplace.visualstudio.com/items?itemName=GitHub.copilot) and [GitHub Copilot Chat](https://marketplace.visualstudio.com/items?itemName=GitHub.copilot-chat) extensions.
@@ -36,17 +35,17 @@ It’s a local, AI-ready Model Context Protocol (MCP) server that encapsulates t
    
 	![vs code install](docs/img/vscode-extension-install.png)
 
-4. Open Copilot chat and confirm the Power BI Modeling MCP server is available.
+4. Open Copilot chat and confirm the **Power BI Modeling MCP server** is available.
    
 	![vscode-mcp-tools](docs/img/vscode-mcp-tools.png)
 
-#### Manual setup
+### Manual install
 
 This MCP Server can also be configured across other IDEs, CLIs, and MCP clients:
 
 1. Download the latest version [here](../../releases/latest).
-2. Unzip the contents to a folder of your choice, for example: `%USERPROFILE%\MCPServers\PowerBIModelingMCP`
-3. Run `%USERPROFILE%\MCPServers\PowerBIModelingMCP\extension\server\powerbi-modeling-mcp.exe`
+2. Unzip the contents to a folder of your choice, for example: `C:\MCPServers\PowerBIModelingMCP`
+3. Run `C:\MCPServers\PowerBIModelingMCP\extension\server\powerbi-modeling-mcp.exe`
 4. Copy the MCP JSON registration from the console and register it in your preferred MCP client tool.
 
 Example of config that should work in most MCP clients:
@@ -56,7 +55,7 @@ Example of config that should work in most MCP clients:
 "servers": {
 		"powerbi-modeling-mcp": {
 			"type": "stdio",
-			"command": "%USERPROFILE%\\MCPServers\\PowerBIModelingMCP\\extension\\server\\powerbi-modeling-mcp.exe",
+			"command": "C:\\MCPServers\\PowerBIModelingMCP\\extension\\server\\powerbi-modeling-mcp.exe",
 			"args": [
 				"--start"                
 			],
@@ -66,7 +65,7 @@ Example of config that should work in most MCP clients:
 }
 ```
 
-### Usage instructions
+## 🚀 How to use
 
 **First, you must connect to a Power BI semantic model**, which can reside in Power BI Desktop, Fabric workspace or in Power BI Project (PBIP) files.
 
@@ -90,7 +89,7 @@ Example of config that should work in most MCP clients:
 
 Once the connection is established, you can use natural language to ask the AI agent to make any modeling changes. To get started, try one of the following scenarios.
 
-#### Example scenarios
+### Example scenarios
 
 | Scenario                                                | Prompt examples                                                                                                                                                                   |
 | ------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -102,6 +101,15 @@ Once the connection is established, you can use natural language to ask the AI a
 
 > [!TIP]
 > The scenarios above are just examples. This MCP server equips your agents with modeling tools for any type of model change, and with the right prompt and context, you can automate virtually any modeling task.
+
+### Confirmation prompts
+
+This MCP Server supports the [Elicitation MCP protocol](https://modelcontextprotocol.io/specification/2025-06-18/client/elicitation), requiring user approval for the following actions:
+
+- Before the first modification made to a semantic model.
+- Before the first query executed against a semantic model.
+
+![mcp-server-elicitation](docs/img/mcp-server-elicitation.png)
 
 ## 🛠️ Available tools
 
@@ -138,7 +146,7 @@ Once the connection is established, you can use natural language to ask the AI a
 > [!NOTE]
 > This project is in Public Preview and tools may significantly change prior to our General Availability.
 
-## Configuration
+## ⚙️ Settings
 
 The MCP server supports several command line options:
 
@@ -182,7 +190,8 @@ Open Visual Studio Code [user settings](https://code.visualstudio.com/docs/confi
 
 ## Considerations and limitations
 
-- MCP server is only supported on the Windows platform
+- This MCP server is only supported on the Windows platform.
+- This MCP server follows the same rules and behaviors as modeling operations performed by External Tools. Refer to the [documentation](https://learn.microsoft.com/power-bi/transform-model/desktop-external-tools#data-modeling-operations) for more information.
 
 ## Security
 
