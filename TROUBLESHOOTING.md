@@ -2,9 +2,9 @@
 
 This guide helps you diagnose and resolve common issues with the Power BI Modeling MCP Server. 
 
-## Inspect the MCP Server output log
+## MCP Server Logging
 
-Check the [MCP server output log](https://code.visualstudio.com/docs/copilot/customization/mcp-servers#_mcp-output-log) to see if any issues or exceptions are reported.
+Check the [MCP server output log](https://code.visualstudio.com/docs/copilot/customization/mcp-servers#_mcp-output-log) for detailed information on any issues. These logs are essential for troubleshooting MCP Server problems.
 
 1. Open Command Palette (Ctrl+Shift+P)
 2. Search for **MCP: List Servers**
@@ -15,11 +15,17 @@ Check the [MCP server output log](https://code.visualstudio.com/docs/copilot/cus
 
 ![troubleshooting-vscode-output](docs/img/troubleshooting-vscode-output.png)
 
-### Logging
+### Collect logs from EventSource
 
-The Power BI Modeling MCP Server is instrumented using the .NET [EventSource](https://learn.microsoft.com/dotnet/api/system.diagnostics.tracing.eventsource) to emit detailed information. Logging follows the pattern of marking operation start, completion, and exceptions. These logs are invaluable for diagnosing MCP Server issues.
+The Power BI Modeling MCP Server also uses the [.NET EventSource](https://learn.microsoft.com/dotnet/api/system.diagnostics.tracing.eventsource) to emit detailed information. You can capture these logs with tools such as [dotnet-trace](https://learn.microsoft.com/dotnet/core/diagnostics/dotnet-trace).
 
-Server logs can be obtained by capturing events for provider "Microsoft-Extensions-Logging".
+Capturing the MCP logs with **dotnet-trace**:
+
+1. Install [dotnet-trace](https://learn.microsoft.com/dotnet/core/diagnostics/dotnet-trace)
+2. Find the process ID for the server `powerbi-modeling-mcp.exe`
+3. Run: `dotnet-trace collect -p {your-process-id} --providers 'Microsoft-Extensions-Logging:4:5'`
+4. Collect the trace
+5. A `.nettrace` file will be output
 
 ## Restart MCP Server
 
