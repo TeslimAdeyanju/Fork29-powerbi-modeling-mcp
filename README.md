@@ -18,7 +18,7 @@ The **Power BI Modeling MCP Server** brings Power BI semantic modeling capabilit
 
 - **🔍 Query and Validate DAX** - AI assistants can execute and validate DAX queries against your model, helping you test measures, troubleshoot calculations, and explore your data
 
-📹 Watch the video for an [end-to-end demo](https://youtu.be/n9JaxHDQIqo?si=U-lUeuJRN-Q5gVM2).
+📹 Watch the video for an [end-to-end demo](https://aka.ms/power-modeling-mcp-demo).
 
 > [!WARNING]  
 > - Use caution when connecting an AI Agent to a semantic model. The underlying LLM may produce unexpected or inaccurate results, which could lead to unintended changes. **Always create a backup of your model before performing any operations.** 
@@ -33,11 +33,11 @@ The easiest way to install this MCP Server is by using the **Visual Studio Code 
 
 1. Install [Visual Studio Code](https://code.visualstudio.com/download).
 2. Install the [GitHub Copilot](https://marketplace.visualstudio.com/items?itemName=GitHub.copilot) and [GitHub Copilot Chat](https://marketplace.visualstudio.com/items?itemName=GitHub.copilot-chat) extensions.
-3. Install the [Power BI Modeling MCP Visual Studio Code extension](https://marketplace.visualstudio.com).
+3. Install the [Power BI Modeling MCP Visual Studio Code extension](https://aka.ms/powerbi-modeling-mcp-vscode).
    
 	![vs code install](docs/img/vscode-extension-install.png)
 
-4. Open [GitHub Copilot chat](https://code.visualstudio.com/docs/copilot/chat/copilot-chat) and confirm the **Power BI Modeling MCP server** is available and selected.
+4. Open [GitHub Copilot chat](https://code.visualstudio.com/docs/copilot/chat/copilot-chat) and confirm the **powerbi-modeling-mcp** is available and selected.
    
 	![vscode-mcp-tools](docs/img/vscode-mcp-tools.png)
 
@@ -126,7 +126,7 @@ This MCP Server supports the [Elicitation MCP protocol](https://modelcontextprot
 | **connection_operations**               | Connect to Power BI Desktop or Fabric workspaces                                                               |
 | **database_operations**                 | Manage semantic models - connect, create, update, list databases, import/export TMDL folders, deploy to Fabric |
 | **transaction_operations**              | Control database transactions (begin, commit, rollback, get status)                                            |
-| **model_operations**                    | Work with the overall model (get info, create, update, refresh, get stats, rename)                             |
+| **model_operations**                    | Work with the overall model (get, create, update, refresh, get stats, rename)                                  |
 | **table_operations**                    | Manage tables (create, update, delete, get, list, refresh, rename)                                             |
 | **column_operations**                   | Manage individual table columns (create, update, delete, get, list, rename)                                    |
 | **measure_operations**                  | Manage individual DAX measures (create, update, delete, get, list, rename, move between tables)                |
@@ -167,7 +167,7 @@ This MCP server includes built-in prompts to help you get started. In **Visual S
 | **AnalyzeDAXQuery**         | Analyzes DAX query performance by running it with a cleared cache and reviewing execution metrics for potential issues.                                                                         |
 | **ConnectToPowerBIDesktop** | Searches for the Power BI Desktop Analysis Services instance that matches the file name and connects to it.                                                                                    |
 | **ConnectToFabric**         | Connects to a semantic model in a Fabric Workspace.                                                                                                                                            |
-| **ConnectToPowerBIProject** | Loads the TMDL definition from the semantic model in the Power BI Project files. Attaches the `powerbi_project_instructions` resource to provide the LLM with Power BI Project (PBIP) context. |
+| **ConnectToPBIP** | Loads the TMDL definition from the semantic model in the Power BI Project files. Attaches the `powerbi_project_instructions` resource to provide the LLM with Power BI Project (PBIP) context. |
 
 > [!NOTE]
 > Some prompts also attach resources that provide important context for the LLM.
@@ -216,7 +216,7 @@ Open **Visual Studio Code** [user settings](https://code.visualstudio.com/docs/c
 
 ## Considerations and limitations
 
-- This MCP server is only supported on the Windows platform.
+- Connecting to a Semantic Model in a Fabric workspace may not work in your tenant due to the ongoing rollout of the client ID used for authentication. 
 - This MCP server follows the same rules and behaviors as modeling operations performed by External Tools. Refer to the [documentation](https://learn.microsoft.com/power-bi/transform-model/desktop-external-tools#data-modeling-operations) for more information.
 
 ## Security
