@@ -47,11 +47,13 @@ The easiest way to install this MCP Server is by using the **Visual Studio Code 
 
 This MCP Server can also be configured across other IDEs, CLIs, and MCP clients:
 
-1. Download the latest version of the vsix here: [win32-x64](https://marketplace.visualstudio.com/_apis/public/gallery/publishers/analysis-services/vsextensions/powerbi-modeling-mcp/0.1.8/vspackage?targetPlatform=win32-x64)	
-2. Rename the downloaded `.visx` file to `.zip`
-3. Unzip the contents to a folder of your choice, for example: `C:\MCPServers\PowerBIModelingMCP`
-4. Run `\extension\server\powerbi-modeling-mcp.exe`
-5. Copy the MCP JSON registration from the console and register it in your preferred MCP client tool.
+1. Download the VSIX package for the version you want using the URL below:
+   - Template: `https://marketplace.visualstudio.com/_apis/public/gallery/publishers/analysis-services/vsextensions/powerbi-modeling-mcp/[version]/vspackage?targetPlatform=[platform]`
+   - Example (version `0.1.9`, platform `win32-x64`): `https://marketplace.visualstudio.com/_apis/public/gallery/publishers/analysis-services/vsextensions/powerbi-modeling-mcp/0.1.9/vspackage?targetPlatform=win32-x64`
+3. Rename the downloaded `.visx` file to `.zip`
+4. Unzip the contents to a folder of your choice, for example: `C:\MCPServers\PowerBIModelingMCP`
+5. Run `\extension\server\powerbi-modeling-mcp.exe`
+6. Copy the MCP JSON registration from the console and register it in your preferred MCP client tool.
 
 Example of config that should work in most MCP clients:
 
@@ -147,12 +149,6 @@ This MCP Server supports the [Elicitation MCP protocol](https://modelcontextprot
 | **object_translation_operations**       | Handle translations for model objects across different cultures/languages                                      |
 | **calendar_operations**                 | Manage calendar objects and time intelligence column groups                                                    |
 | **query_group_operations**              | Organize and manage query groups for Power Query expressions                                                   |
-| **batch_table_operations**              | Perform bulk operations on tables (create, update, delete, get, rename multiple tables)                        |
-| **batch_column_operations**             | Perform bulk operations on table columns (create, update, delete, get, rename multiple columns at once)        |
-| **batch_measure_operations**            | Perform bulk operations on measures (create, update, delete, get, rename, move multiple measures)              |
-| **batch_function_operations**           | Perform bulk operations on DAX functions (create, update, delete, get, rename multiple functions)              |
-| **batch_perspective_operations**        | Bulk manage perspective members (tables, columns, measures, hierarchies)                                       |
-| **batch_object_translation_operations** | Bulk create, update, delete, or get object translations across cultures                                        |
 
 > [!NOTE]
 > This project is in Public Preview and tools may significantly change prior to our General Availability.
@@ -177,9 +173,9 @@ This MCP server includes built-in prompts to help you get started. In **Visual S
 
 ## ⚙️ Settings
 
-The MCP server supports several command line options:
+The MCP server supports several command line options and environment variables:
 
-| Option               | Default | Description                                                                                                                                                                                                               |
+| Command line option  | Default | Description                                                                                                                                                                                                               |
 | -------------------- | ------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `--start`            |         | Starts the MCP server; necessary for server registration with MCP client.                                                                                                                                                 |
 | `--readwrite`        | Yes     | Enabled by default, enables write operations with confirmation prompt before applying an edit to your semantic model (once per database).                                                                                 |
@@ -187,13 +183,18 @@ The MCP server supports several command line options:
 | `--skipconfirmation` |         | Automatically approves all write operations without confirmation prompts. Only use skip confirmation mode when you're confident about the operations being performed and have appropriate backups of your semantic model. |
 | `--compatibility`    | PowerBI | By default, it is optimized for Power BI semantic models. Change the setting to `Full` if you want to run this MCP server against Analysis Services databases.                                                            |
 
-**For Visual Studio Code**, you can set the command line options configuring the `args` setting:
+| Environment variable name  | Default | Description                                                                                                                                                                                                               |
+| -------------------- | ------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `PBI_MODELING_MCP_ACCESS_TOKEN`            |         | When configured, the MCP Server uses the specified access token instead of prompting for authentication when connecting to a semantic model in a Fabric workspace. This is useful in scenarios where the application handles authentication itself.
+                                                                                                                                                |
+
+**For Visual Studio Code**, you can set the command line options and environment variables in the **User Settings**:
 
 Open **Visual Studio Code** [user settings](https://code.visualstudio.com/docs/configure/settings#_settings-editor) and search for `@ext:Microsoft.powerbi-modeling-mcp`.
 
 ![VS Code settings](docs/img/vscode-mcp-settings.png)
 
-**For Manual installations**, you can set the command line options configuring the `args` property in the MCP Server registration JSON:
+**For manual installations**, you can configure command-line options using the `args` property and set environment variables using the `env` property in the MCP Server registration JSON:
 
 ```json
 {
@@ -204,7 +205,9 @@ Open **Visual Studio Code** [user settings](https://code.visualstudio.com/docs/c
 				"--start"
                 , "--skipconfirmation"
 			],
-			"env": {},
+			"env": {
+				"PBI_MODELING_MCP_ACCESS_TOKEN": "[ACCESS_TOKEN]"
+			},
 			"type": "stdio"
 		}
 	}
@@ -219,7 +222,8 @@ Open **Visual Studio Code** [user settings](https://code.visualstudio.com/docs/c
 
 ## Considerations and limitations
 
-- Connecting to a Semantic Model in a Fabric workspace may not work in your tenant due to the ongoing rollout of the client ID used for authentication. 
+- Connecting to a Semantic Model in a Fabric workspace may not work in your tenant due to the ongoing rollout of the client ID used for authentication.
+- Compatible with Gemini 3 models. There is a known issue with JSON schema handling, which we are actively working to resolve.
 - This MCP server follows the same rules and behaviors as modeling operations performed by External Tools. Refer to the [documentation](https://learn.microsoft.com/power-bi/transform-model/desktop-external-tools#data-modeling-operations) for more information.
 
 ## Security
